@@ -9,9 +9,9 @@ Sample configuration.yaml
 device_tracker:
   - platform: nmap_tracker
     hosts:
-     - 192.168.2.0/24
+     - 192.168.0.0/24
     home_interval: 30
-    scan_options: " --privileged -n --host-timeout 5s "
+    scan_options: " --privileged -n --host-timeout 2s "
     exclude:
      - 192.168.2.9
     local_mac_hostname: "localhostunique"

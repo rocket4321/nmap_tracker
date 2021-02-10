@@ -39,10 +39,9 @@ Nmap tracker keep rediscovering excluded hosts with DHCP #26553
 31986
 nmap_tracker.device_tracker reports "No MAC address found for" itself #31986
 
-
-
 33281
 Issue with nmap_tracker since 107.6 #33281
+- Based on personal testing and other reports, I have observed cases where the python-nmap package will actually never return. This could be remedied by a timeout in the package itself.
 
 q)s
 

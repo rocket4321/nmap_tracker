@@ -44,7 +44,12 @@ nmap_tracker.device_tracker reports "No MAC address found for" itself #31986
 33281
 Issue with nmap_tracker since 107.6 #33281
 
+q)s
+
 >> Above issue could be migitigated by either:
 a) - create sep thread to perform nmap scan, kill if too long
 b) - request nmap package update to perform timeout (bitbucket)
 c) - both a & b 
+
+>> How would a duplicate device_tracker be handled by HASS? Would each update clobber the other?
+-- this is possible since the user can define any mac address in the config for localhost, so does this need to be blocked at startup?

@@ -26,3 +26,24 @@ device_tracker:
 
 To install, see HASS docs for custom_component install.
 Essentially, place these files in custom_compoenent subfolder
+
+
+STATUS:
+
+I believe this update resolves the below 2 issues, but I'm still examining how to resolve 33281
+
+26553
+Nmap tracker keep rediscovering excluded hosts with DHCP #26553
+
+31986
+nmap_tracker.device_tracker reports "No MAC address found for" itself #31986
+
+
+
+33281
+Issue with nmap_tracker since 107.6 #33281
+
+>> Above issue could be migitigated by either:
+a) - create sep thread to perform nmap scan, kill if too long
+b) - request nmap package update to perform timeout (bitbucket)
+c) - both a & b 

@@ -97,8 +97,6 @@ class NmapDeviceScanner(DeviceScanner):
         Returns boolean if scanning successful.
         """
         _LOGGER.debug("Scanning...")
-#FIXME
-        _LOGGER.info("Scanning...")
 
         scanner = PortScanner()
 

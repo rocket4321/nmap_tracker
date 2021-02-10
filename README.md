@@ -13,7 +13,7 @@ device_tracker:
     home_interval: 30
     scan_options: " --privileged -n --host-timeout 2s "
     exclude:
-     - 192.168.2.9
+     - 192.168.0.254
     local_mac_hostname: "localhostunique"
     exclude-mac:
      - FF:FF:FF:FF:FF:FF

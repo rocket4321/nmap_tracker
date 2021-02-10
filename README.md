@@ -18,6 +18,7 @@ device_tracker:
     exclude-mac:
      - FF:FF:FF:FF:FF:FF
 ```
+New OPTIONAL config fields:
 
 - local_mac_hostname default is 'localhost', which would create a sensor 'device_tracker.localhost'
 - local_mac_hostname can also be a mac to match other created sensors.

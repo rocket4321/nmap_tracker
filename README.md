@@ -22,7 +22,7 @@ New OPTIONAL config fields:
 
 - local_mac_hostname default is 'localhost', which would create a sensor 'device_tracker.localhost'
 - local_mac_hostname can also be a mac to match other created sensors.
-- exclude-mac must be in all caps.
+- exclude-mac item list entires must be in all caps.
 
 
 To install, see HASS docs for custom_component install.

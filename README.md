@@ -54,19 +54,8 @@ c) - both a & b
 >> How would a duplicate device_tracker be handled by HASS? Would each update clobber the other?
 -- this is possible since the user can define any mac address in the config for localhost, so does this need to be blocked at startup?
 
->> Nmap results return could also be getting stalled by a single host or subnet, so allowing the user to define seperate instances of nmap might be useful.
--- in another method, each line in the hosts config could evaulate to seperate Nmap call, allowing for varing user config options
--- such as:
-```
-Config A:
--- 192.168.0.0/24
+>> Nmap results return could also be getting stalled by a single host or subnet, so recommending for users to define seperate instances of nmap might be useful.
 
-Config B:
--- 192.168.0.1-124
--- 192.168.0.125-254
-```
-Currently, the component will combine both of these to a single nmap call, waiting until everything returns. I suggest making this into 2 separate calls to the package, allowing a user to define each call down to a single ip, or over an entire range. Based on personal testing, adding an external subnet will cause nmap to slow dramatically or potentially hang, so allowing what data can be retrieved would be much more valuable over a no data from a stall. On the other hand, nmap is primarily used for local devices, but a user can enter anything into the yaml. Yet, the potential for user disagnosis and subnet splitting to deal with local variances seems a clear improvement.
-
-Furthermore, by default, nmap is doing reverse DNS lookups for devices to get names, so that also could be causing some user's issues and hangs.
+>> Furthermore, by default, nmap is doing reverse DNS lookups for devices to get names, so that also could be causing some user's issues and hangs.
 
 

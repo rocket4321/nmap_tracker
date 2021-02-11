@@ -10,13 +10,24 @@ device_tracker:
   - platform: nmap_tracker
     hosts:
      - 192.168.0.0/24
-    home_interval: 30
-    scan_options: " --privileged -n --host-timeout 2s "
+    home_interval: 20
+    interval_seconds: 150
+    scan_options: " --dns-servers 192.168.2.1 --privileged -n --host-timeout 2s "
     exclude:
-     - 192.168.0.254
+     - 192.168.0.69
     local_mac_hostname: "localhostunique"
     exclude-mac:
      - FF:FF:FF:FF:FF:FF
+
+  - platform: nmap_tracker
+    hosts:
+     - 192.168.100.1-254
+    home_interval: 10
+    interval_seconds: 300
+    scan_options: " -sn --privileged --host-timeout 5s "
+    new_device_defaults:
+      track_new_devices: false
+
 ```
 New OPTIONAL config fields:
 

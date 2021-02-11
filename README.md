@@ -27,7 +27,7 @@ New OPTIONAL config fields:
 Recommend to delete known_devices.yaml prior to install.
 
 To install, see HASS docs for custom_component install.
-Essentially, place these files in custom_compoenent subfolder
+Essentially, place these files in custom_component subfolder
 
 
 STATUS:

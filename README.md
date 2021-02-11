@@ -54,7 +54,7 @@ c) - both a & b
 >> How would a duplicate device_tracker be handled by HASS? Would each update clobber the other?
 -- this is possible since the user can define any mac address in the config for localhost, so does this need to be blocked at startup?
 
->> Nmap could also be getting hung be a single host, so allowing the user to define seperate instances of nmap might be useful.
+>> Nmap results return could also be getting stalled by a single host or subnet, so allowing the user to define seperate instances of nmap might be useful.
 -- in another method, each line in the hosts config could evaulate to seperate Nmap call, allowing for varing user config options
 -- such as:
 ```

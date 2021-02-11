@@ -65,7 +65,7 @@ Config B:
 -- 192.168.0.1-124
 -- 192.168.0.124-254
 ```
-Currently, the component will combine both of these to a single nmap call, waiting until everything returns. I suggest making this into 2 seperate calls to the package, allowing a user to define each call down to a single ip, or over an entire range. Based on testing, adding an external subnet will cause nmap to slow dramatically or potentially hang, so allowing what data can be retrieved would be much more valuable. On the other hand, nmap is primarily used for local devices, but a user can enter anything. 
+Currently, the component will combine both of these to a single nmap call, waiting until everything returns. I suggest making this into 2 seperate calls to the package, allowing a user to define each call down to a single ip, or over an entire range. Based on testing, adding an external subnet will cause nmap to slow dramatically or potentially hang, so allowing what data can be retrieved would be much more valuable. On the other hand, nmap is primarily used for local devices, but a user can enter anything. Yet, the potential for user disagnosis and subnet splitting to deal with local variances seems a clear improvement.
 
 Furthermore, by default, nmap is doing reverse DNS lookups for devices to get names, so that also could be causing some user's issues and hangs.
 

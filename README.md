@@ -12,7 +12,7 @@ device_tracker:
      - 192.168.0.0/24
     home_interval: 20
     interval_seconds: 150
-    scan_options: " --dns-servers 192.168.2.1 --privileged -n --host-timeout 2s "
+    scan_options: " --dns-servers 192.168.0.1 --privileged -n --host-timeout 2s "
     exclude:
      - 192.168.0.69
     local_mac_hostname: "localhostunique"

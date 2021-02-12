@@ -44,7 +44,7 @@ New OPTIONAL config fields:
 - debug_log_level is integer (1-5) that allows for limited or expanded debug to log, when debug level is active
 ->> Privacy Warning: debug_log_level of 3+ includes MAC addresses
 
-Recommend to delete known_devices.yaml prior to install.
+Recommend to delete known_devices.yaml prior to install. (take a backup first, silly!)
 
 To install, see HASS docs for custom_component install.
 Essentially, place these files in custom_component subfolder

@@ -10,6 +10,11 @@ Sample configuration.yaml
 device_tracker:
   - platform: nmap_tracker
     hosts:
+     - 192.168.100.0/24
+    scan_options: " -sn --privileged --host-timeout 5s "
+     
+- platform: nmap_tracker
+    hosts:
      - 192.168.0.0/24
     home_interval: 20
     timeout: 60
@@ -24,7 +29,7 @@ device_tracker:
     
   - platform: nmap_tracker
     hosts:
-     - 192.168.100.1-254
+     - 192.168.1.1-254
     home_interval: 10
     timeout: 60
     interval_seconds: 300
@@ -32,9 +37,8 @@ device_tracker:
     debug_log_level: 5
     new_device_defaults:
       track_new_devices: false
-    
-
 ```
+
 New OPTIONAL config fields:
 
 - timeout: postive integer in seconds to allow nmap process to perform

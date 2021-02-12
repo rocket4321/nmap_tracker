@@ -11,7 +11,7 @@ device_tracker:
     hosts:
      - 192.168.0.0/24
     home_interval: 20
-    interval_seconds: 150
+    interval_seconds: 300
     scan_options: " --dns-servers 192.168.0.1 --privileged -n --host-timeout 2s "
     exclude:
      - 192.168.0.69
@@ -72,6 +72,8 @@ Issue with nmap_tracker since 107.6 #33281
 
 
 Further thoughts:
+
+>> interval_seconds: I really recommend no smaller than the default 300 (5 min). I've seen some posts of sub 60 seconds, so could translate to a heavy network workload for older devices across an entire subnet.
 
 >> How would a duplicate device_tracker be handled by HASS? Would each update clobber the other?
 -- this is possible since the user can define any mac address in the config for localhost, so does this need to be blocked at startup?

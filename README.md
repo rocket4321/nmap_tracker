@@ -53,10 +53,15 @@ Recommend to delete known_devices.yaml prior to install. (take a backup first, s
 To install, see HASS docs for custom_component install.
 Essentially, place these files in custom_component subfolder
 
-Recommendations for posting issues:
-- alter log level, as below
-- set debug_log_level to 5
+Recommendations for users with issues:
 - set configuration.yaml to have only nmap_device tracker
+- alter log level, as below
+- logs will include the actual nmap command performed if valid options are provided
+>>  attempt to perform command within same execution as hass
+>> such as for docker: docker exec <container-name>> nmap <options> <hosts>
+
+If you still have issues, create an Issue here and please:
+- set debug_log_level to 5
 - execute for at lengthy period (30+ min?) and upload log to github issue
 ```
 logger:

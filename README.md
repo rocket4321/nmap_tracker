@@ -58,7 +58,8 @@ Recommendations for users with issues:
 - alter log level, as below
 - logs will include the actual nmap command performed if valid options are provided
 -- attempt to perform command within same execution as hass
--- such as for docker: docker exec <container-name>> nmap <options> <hosts>
+-- such as for docker: 
+```docker exec <container-name>> nmap <options> <hosts>```
 
 If you still have issues, create an Issue here and please:
 - set debug_log_level to 5

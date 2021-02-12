@@ -57,8 +57,8 @@ Recommendations for users with issues:
 - set configuration.yaml to have only nmap_device tracker
 - alter log level, as below
 - logs will include the actual nmap command performed if valid options are provided
->>  attempt to perform command within same execution as hass
->> such as for docker: docker exec <container-name>> nmap <options> <hosts>
+# attempt to perform command within same execution as hass
+# such as for docker: docker exec <container-name>> nmap <options> <hosts>
 
 If you still have issues, create an Issue here and please:
 - set debug_log_level to 5
@@ -110,5 +110,5 @@ Further thoughts:
 Latest:
 
 -- 2021.02.12 - PR for python-nmap library in progress
->> email sent to code owner for review and evaluation
+# email sent to code owner for review and evaluation
 

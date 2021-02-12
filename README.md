@@ -12,6 +12,7 @@ device_tracker:
     hosts:
      - 192.168.0.0/24
     home_interval: 20
+    timeout: 60
     interval_seconds: 300
     scan_options: " --dns-servers 192.168.0.1 --privileged -n --host-timeout 2s "
     exclude:
@@ -25,6 +26,7 @@ device_tracker:
     hosts:
      - 192.168.100.1-254
     home_interval: 10
+    timeout: 60
     interval_seconds: 300
     scan_options: " -sn --privileged --host-timeout 5s "
     debug_log_level: 5
@@ -35,6 +37,7 @@ device_tracker:
 ```
 New OPTIONAL config fields:
 
+- timeout: postive integer in seconds to allow nmap process to perform
 - local_mac_hostname default is 'localhost', which would create a sensor 'device_tracker.localhost'
 - local_mac_hostname can also be a mac to match other created sensors.
 - exclude-mac item list entires must be in all caps.
@@ -61,7 +64,7 @@ logger:
 
 STATUS:
 
-I believe this update resolves the below 3 issues
+I believe this update resolves the below issues
 
 26553
 Nmap tracker keep rediscovering excluded hosts with DHCP #26553
@@ -80,6 +83,8 @@ Log spam: "Updating device list from legacy took longer than the scheduled scan 
 
 
 Further thoughts:
+
+>> exclude logic - a device, once observed, is not scanned for unless it would be marked as not_home within the next <home_interval> minutes. This provides only a single scan for a device to continue to be marked as home. If some device connections are irregular, then a device would toggle back and forth. This is likely the best next option for a user to be able to disable, if the code allowed it.
 
 >> interval_seconds: I really recommend no smaller than the default 300 (5 min). I've seen some posts of sub 60 seconds, so could translate to a heavy network workload for older devices across an entire subnet.
 

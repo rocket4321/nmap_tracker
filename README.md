@@ -34,13 +34,19 @@ New OPTIONAL config fields:
 - local_mac_hostname default is 'localhost', which would create a sensor 'device_tracker.localhost'
 - local_mac_hostname can also be a mac to match other created sensors.
 - exclude-mac item list entires must be in all caps.
+- debug_log_level is integer (1-5) that allows for limited or expanded debug to log, when debug level is active
+->> Privacy Warning: debug_log_level of 3+ includes MAC addresses
 
 Recommend to delete known_devices.yaml prior to install.
 
 To install, see HASS docs for custom_component install.
 Essentially, place these files in custom_component subfolder
 
-For issues, alter log level
+Recommendations for posting issues:
+- alter log level, as below
+- set debug_log_level to 5
+- set configuration.yaml to have only nmap_device tracker
+- execute for at lengthy period (30+ min?) and upload log to github issue
 ```
 logger:
   default: warning
@@ -51,7 +57,7 @@ logger:
 
 STATUS:
 
-I believe this update resolves the below 2 issues, but I'm still examining how to resolve 33281
+I believe this update resolves the below 3 issues
 
 26553
 Nmap tracker keep rediscovering excluded hosts with DHCP #26553
@@ -61,19 +67,16 @@ nmap_tracker.device_tracker reports "No MAC address found for" itself #31986
 
 33281
 Issue with nmap_tracker since 107.6 #33281
-- Based on personal testing and other reports, I have observed cases where the python-nmap package will actually never return. This could be remedied by a timeout in the package itself.
+>>> Essentially, you will see this line in your log on every nmap scan:
+[homeassistant.components.device_tracker] Updating device list from legacy took longer than the scheduled scan interval 0:05:00
 
-q)s
 
->> Above issue could be migitigated by either:
-a) - create sep thread to perform nmap scan, kill if too long
-b) - request nmap package update to perform timeout (bitbucket)
-c) - both a & b 
+Further thoughts:
 
 >> How would a duplicate device_tracker be handled by HASS? Would each update clobber the other?
 -- this is possible since the user can define any mac address in the config for localhost, so does this need to be blocked at startup?
 
->> Nmap results return could also be getting stalled by a single host or subnet, so recommending for users to define seperate instances of nmap might be useful.
+>> Nmap results return could also be getting stalled by a single host or subnet, so recommending for users to define seperate instances of nmap device tracker for seperate subnets or for sporatic network responsiveness. Each device_tracker instance translates a different nmap process that could be either succeed or fail. It's defined in the user's config how each group is segmented, but multiple host line definitions are combined to a single process call for each nmap device tracker instance.
 
 >> Furthermore, by default, nmap is doing reverse DNS lookups for devices to get names, so that also could be causing some user's issues and hangs.
 

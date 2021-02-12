@@ -71,6 +71,10 @@ nmap_tracker.device_tracker reports "No MAC address found for" itself #31986
 
 33281
 Issue with nmap_tracker since 107.6 #33281
+
+34813
+Log spam: "Updating device list from legacy took longer than the scheduled scan interval" #34813
+
 >>> Essentially, you will see this line in your log on every nmap scan:
 [homeassistant.components.device_tracker] Updating device list from legacy took longer than the scheduled scan interval 0:05:00
 

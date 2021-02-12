@@ -3,6 +3,7 @@ nmap_tracker component for Home Assistant
 
 NOTE: Temporary until PR submittal to HASS core
 
+
 Sample configuration.yaml
 
 ```
@@ -18,15 +19,18 @@ device_tracker:
     local_mac_hostname: "localhostunique"
     exclude-mac:
      - FF:FF:FF:FF:FF:FF
-
+    debug_log_level: 2
+    
   - platform: nmap_tracker
     hosts:
      - 192.168.100.1-254
     home_interval: 10
     interval_seconds: 300
     scan_options: " -sn --privileged --host-timeout 5s "
+    debug_log_level: 5
     new_device_defaults:
       track_new_devices: false
+    
 
 ```
 New OPTIONAL config fields:
@@ -83,3 +87,10 @@ Further thoughts:
 >> Furthermore, by default, nmap is doing reverse DNS lookups for devices to get names, so that also could be causing some user's issues and hangs.
 
 >> Other failure causes could simply be resource limitations, such as local computing hardware, network delays/errors, wifi reception... If a nmap scan can't complete in enough time that a device is subsequently marked 'not_home', it then would only to be toggled back to 'home' when the scan completed. All this definitely would imply either a timing or resource bottleneck.
+
+
+Latest:
+
+-- 2021.02.12 - PR for python-nmap library in progress
+>> email sent to code owner for review and evaluation
+

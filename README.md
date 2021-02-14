@@ -42,9 +42,16 @@ device_tracker:
 New OPTIONAL config fields:
 
 - timeout: postive integer in seconds to allow nmap process to perform
+
+- exclude-active is a boolean, enabled by default. When disabled, forces nmap to scan all configured host(s) on every scan. 
+>> By default, this component optimizes to only scan for devices that could be marked as 'not_home' within the next <home_interval> minutes. This provides only a single scan for a device to continue to be marked as home. If some device connections are irregular, then a device would toggle back and forth. This is likely the best next option for a user to be able to enable if devices are toggling back and forth, but may increase resource consumption, based on configuration settings.
+
 - local_mac_hostname default is 'localhost', which would create a sensor 'device_tracker.localhost'
 - local_mac_hostname can also be a mac to match other created sensors.
+
+- exclude-mac is a list of MAC address to be ignored when returned by nmap results.
 - exclude-mac item list entires must be in all caps.
+
 - debug_log_level is integer (1-5) that allows for limited or expanded debug to log, when debug level is active
 ->> Privacy Warning: debug_log_level of 3+ includes MAC addresses
 
@@ -95,8 +102,6 @@ Log spam: "Updating device list from legacy took longer than the scheduled scan 
 Further thoughts:
 
 >> By default, nmap is doing reverse DNS lookups for devices to get names, so that also could be causing some user's issues and hangs. Further code improvements should incorporate so that this action is not completed every scan, but simply on a startup/interval basis. Both of the examples above control where DNS requests go and/or disable it.
-
->> exclude logic - a device, once observed, is not scanned for unless it would be marked as not_home within the next <home_interval> minutes. This provides only a single scan for a device to continue to be marked as home. If some device connections are irregular, then a device would toggle back and forth. This is likely the best next option for a user to be able to disable, if the code allowed it.
 
 >> interval_seconds: I really recommend no smaller than the default 300 (5 min). I've seen some posts of sub 60 seconds, so could translate to a heavy network workload for older devices across an entire subnet.
 

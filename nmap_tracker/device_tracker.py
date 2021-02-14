@@ -41,12 +41,16 @@ _LOGGER = logging.getLogger(__name__)
 ATTR_PROCESSOR = "processor"
 CONF_DEBUG_LEVEL = "debug_log_level"
 CONF_EXCLUDE = "exclude"
-CONF_EXCLUDE_MAC = "exclude-mac"
+CONF_EXCLUDE_ACTIVE = "exclude_active"
+CONF_EXCLUDE_MAC = "exclude_mac"
 # Interval in minutes to exclude devices from a scan while they are home
 CONF_HOME_INTERVAL = "home_interval"
+CONF_INCLUDE_NO_MAC = "include_no_mac"
 CONF_OPTIONS = "scan_options"
 CONF_TIMEOUT = "timeout"
 CONF_LOCAL_MAC_NAME = "local_mac_hostname"
+DEFAULT_EXCLUDE_ACTIVE = True
+DEFAULT_INCLUDE_NO_MAC = False
 DEFAULT_OPTIONS = "-F --host-timeout 5s"
 DEFAULT_LOCAL_MAC_NAME = "localhost"
 DEFAULT_PROCESS_EVAL_INTERVAL = 5
@@ -55,6 +59,7 @@ DEFAULT_ALERT_THREAD_COUNT_MIN = 3
 # Varying increase in log debug
 # WARNING: Level 3+ includes MAC addresses in logs
 DEFAULT_DEBUG_LEVEL = "1"
+DEFAULT_MAC = "XX:XX:XX:XX:XX:XX"
 
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -62,11 +67,13 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Required(CONF_HOSTS): cv.ensure_list,
         vol.Required(CONF_HOME_INTERVAL, default=0): cv.positive_int,
         vol.Optional(CONF_EXCLUDE, default=[]): vol.All(cv.ensure_list, [cv.string]),
+        vol.Optional(CONF_EXCLUDE_ACTIVE, default=DEFAULT_EXCLUDE_ACTIVE): cv.boolean,
         vol.Optional(CONF_EXCLUDE_MAC, default=[]): vol.All(cv.ensure_list, [cv.string]),
         vol.Optional(CONF_OPTIONS, default=DEFAULT_OPTIONS): cv.string,
         vol.Optional(CONF_TIMEOUT, default=DEFAULT_TIMEOUT): cv.positive_int,
         vol.Optional(CONF_DEBUG_LEVEL, default=DEFAULT_DEBUG_LEVEL): cv.positive_int,
         vol.Optional(CONF_LOCAL_MAC_NAME, default=DEFAULT_LOCAL_MAC_NAME): cv.string,
+        vol.Optional(CONF_INCLUDE_NO_MAC, default=DEFAULT_INCLUDE_NO_MAC): cv.boolean,
     }
 )
 
@@ -87,6 +94,7 @@ class NmapDeviceScanner(DeviceScanner):
         self.thread_idents = []
         self.hosts = config[CONF_HOSTS]
         self.exclude = config[CONF_EXCLUDE]
+        self.exclude_active = config[CONF_EXCLUDE_ACTIVE]
         self.exclude_mac = config[CONF_EXCLUDE_MAC]
         home_interval_minutes = config[CONF_HOME_INTERVAL]
         self.timeout = timedelta(seconds=config[CONF_TIMEOUT])
@@ -95,6 +103,7 @@ class NmapDeviceScanner(DeviceScanner):
         self.local_mac_name = config[CONF_LOCAL_MAC_NAME]
         self.debug_level = int(config[CONF_DEBUG_LEVEL])
         self.nmap_process_queue = queue.SimpleQueue()
+        self.include_no_mac = config[CONF_INCLUDE_NO_MAC]
        
     def scan_devices(self):
         """Scan for new devices and return a list with found device IDs."""
@@ -134,7 +143,7 @@ class NmapDeviceScanner(DeviceScanner):
             last_results = [
                 device for device in self.last_results if device.last_update > boundary
             ]
-            if last_results:
+            if last_results and self.exclude_active:
                 exclude_hosts = self.exclude + [device.ip for device in last_results]
             else:
                 exclude_hosts = self.exclude
@@ -157,6 +166,7 @@ class NmapDeviceScanner(DeviceScanner):
 			, self.timeout
 			, self.exclude_mac
 			, self.local_mac_name
+			, self.include_no_mac
 			, self.debug_level
 		)
         processor.start()
@@ -213,6 +223,7 @@ class NmapProcessor(threading.Thread):
 		, timeout
 		, exclude_mac
 		, local_mac_name
+		, include_no_mac
 		, debug_level
 		):
         """Initialize nmap processing thread."""
@@ -227,6 +238,7 @@ class NmapProcessor(threading.Thread):
         self._local_mac_name = local_mac_name
         self._debug_level = debug_level
         self._queue = queue
+        self._include_no_mac = include_no_mac
 
         if self._debug_level >= 2:
            _LOGGER.debug("Processor [%s] initialized for %s"
@@ -244,8 +256,12 @@ class NmapProcessor(threading.Thread):
             if mac is None:
                 # nmap will not report MAC for local ip, so ignore for single case
                 if info["status"]["reason"] != "localhost-response":
-                    _LOGGER.debug("No MAC address found for %s", ipv4)
-                    continue
+                    if self._include_no_mac:
+                        mac = DEFAULT_MAC
+                    else:
+                        _LOGGER.info("No MAC address found for %s. Enable '%s' for nmap for device monitoring."
+				, ipv4, CONF_INCLUDE_NO_MAC)
+                        continue
                 else:
                     # provide default mac as name for fill-in
                     mac = self._local_mac_name

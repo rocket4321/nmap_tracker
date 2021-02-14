@@ -8,36 +8,54 @@ Sample configuration.yaml
 
 ```
 device_tracker:
+# Minimum Required
   - platform: nmap_tracker
     hosts:
      - 192.168.100.0/24
 
-- platform: nmap_tracker
+# Default
+  - platform: nmap_tracker
     hosts:
      - 192.168.0.0/24
     home_interval: 20
+    exclude-active: true
     timeout: 60
     interval_seconds: 300
     include_no_mac: false
+    scan_options: "-F --host-timeout 5s"
+    debug_log_level: 2
+    new_device_defaults:
+      track_new_devices: true
+      
+# Advanced/Experimental
+  - platform: nmap_tracker
+    hosts:
+     - 192.168.0.0/24
+    home_interval: 10
+    exclude-active: false
+    timeout: 20
+    interval_seconds: 90
+    include_no_mac: true
     scan_options: " --dns-servers 192.168.0.1 --privileged -n --host-timeout 2s "
     exclude:
      - 192.168.0.69
     local_mac_hostname: "localhostunique"
     exclude-mac:
      - FF:FF:FF:FF:FF:FF
-    debug_log_level: 2
+    debug_log_level: 5
     
+# Note: Below config for testing ONLY  
   - platform: nmap_tracker
     hosts:
-     - 192.168.1.1-254
+     - www.google.com
     include_no_mac: true
+    interval_seconds: 90
     home_interval: 10
-    timeout: 60
+    timeout: 30
     interval_seconds: 300
-    scan_options: " -sn --privileged --host-timeout 5s "
+    scan_options: "-sn --privileged --host-timeout 10s"
     debug_log_level: 5
-    new_device_defaults:
-      track_new_devices: false
+    
 ```
 
 New OPTIONAL config fields:

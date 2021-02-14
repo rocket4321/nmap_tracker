@@ -3,6 +3,8 @@ nmap_tracker component for Home Assistant
 
 NOTE: Temporary until PR submittal to HASS core
 
+ALSO: For now, this component uses a dev version of python-nmap (bitbucket), but plans to switch back to the package once changes have been incorporated and released. Email coordination is in progress with code owner. See bottom for latest details.
+
 
 Sample configuration.yaml
 

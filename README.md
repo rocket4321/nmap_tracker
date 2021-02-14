@@ -32,7 +32,7 @@ device_tracker:
     hosts:
      - 192.168.0.0/24
     home_interval: 10
-    exclude-active: false
+    exclude_active: false
     timeout: 20
     interval_seconds: 90
     include_no_mac: true

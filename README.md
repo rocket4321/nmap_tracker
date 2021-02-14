@@ -11,14 +11,14 @@ device_tracker:
   - platform: nmap_tracker
     hosts:
      - 192.168.100.0/24
-    scan_options: " -sn --privileged --host-timeout 5s "
-     
+
 - platform: nmap_tracker
     hosts:
      - 192.168.0.0/24
     home_interval: 20
     timeout: 60
     interval_seconds: 300
+    include_no_mac: false
     scan_options: " --dns-servers 192.168.0.1 --privileged -n --host-timeout 2s "
     exclude:
      - 192.168.0.69
@@ -30,6 +30,7 @@ device_tracker:
   - platform: nmap_tracker
     hosts:
      - 192.168.1.1-254
+    include_no_mac: true
     home_interval: 10
     timeout: 60
     interval_seconds: 300
@@ -49,8 +50,9 @@ New OPTIONAL config fields:
 - local_mac_hostname default is 'localhost', which would create a sensor 'device_tracker.localhost'
 - local_mac_hostname can also be a mac to match other created sensors.
 
-- exclude-mac is a list of MAC address to be ignored when returned by nmap results.
-- exclude-mac item list entires must be in all caps.
+- include_no_mac is a boolean, disabled by default. When enabled, if a MAC address is not returned by nmap, it will be included and monitored. Naming scheme will will use hostname, or ip address if unavailable. MAC address is marked as 'XX:XX:XX:XX:XX:XX' in known_devices.xml
+
+- exclude-mac is a list of MAC address to be ignored when returned by nmap results. MAC address entries must be in all caps.
 
 - debug_log_level is integer (1-5) that allows for limited or expanded debug to log, when debug level is active
 ->> Privacy Warning: debug_log_level of 3+ includes MAC addresses
@@ -101,16 +103,22 @@ Log spam: "Updating device list from legacy took longer than the scheduled scan 
 
 Further thoughts:
 
->> By default, nmap is doing reverse DNS lookups for devices to get names, so that also could be causing some user's issues and hangs. Further code improvements should incorporate so that this action is not completed every scan, but simply on a startup/interval basis. Both of the examples above control where DNS requests go and/or disable it.
+>> By default, nmap is doing reverse DNS lookups for devices to get names, so that also could be causing some user's issues and hangs. Further code improvements should incorporate so that this action is not completed every scan, but simply on a startup/interval basis. Some of the examples above control where DNS requests go and/or disable it.
 
 >> interval_seconds: I really recommend no smaller than the default 300 (5 min). I've seen some posts of sub 60 seconds, so could translate to a heavy network workload for older devices across an entire subnet.
-
->> How would a duplicate device_tracker be handled by HASS? Would each update clobber the other?
--- this is possible since the user can define any mac address in the config for localhost, so does this need to be blocked at startup?
 
 >> Nmap results return could also be getting stalled by a single host or subnet, so recommending for users to define seperate instances of nmap device tracker for seperate subnets or for sporatic network responsiveness. Each device_tracker instance translates a different nmap process that could be either succeed or fail. It's defined in the user's config how each group is segmented, but multiple host line definitions are combined to a single process call for each nmap device tracker instance.
 
 >> Other failure causes could simply be resource limitations, such as local computing hardware, network delays/errors, wifi reception... If a nmap scan can't complete in enough time that a device is subsequently marked 'not_home', it then would only to be toggled back to 'home' when the scan completed. All this definitely would imply either a timing or resource bottleneck.
+
+
+Qs for HASS team:
+
+>> Is a default MAC address of 'xx:xx:xx:xx:xx:xx' acceptable in known_devices.xml ?
+
+>> How would a duplicate device_tracker be handled by HASS? Would each update clobber the other?
+-- this is possible since the user can define any mac address in the config for localhost, so does this need to be blocked at startup?
+
 
 
 Latest:

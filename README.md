@@ -18,7 +18,7 @@ device_tracker:
     hosts:
      - 192.168.0.0/24
     home_interval: 20
-    exclude-active: true
+    exclude_active: true
     timeout: 60
     interval_seconds: 300
     include_no_mac: false
@@ -40,7 +40,7 @@ device_tracker:
     exclude:
      - 192.168.0.69
     local_mac_hostname: "localhostunique"
-    exclude-mac:
+    exclude_mac:
      - FF:FF:FF:FF:FF:FF
     debug_log_level: 5
     
@@ -62,7 +62,7 @@ New OPTIONAL config fields:
 
 - timeout: postive integer in seconds to allow nmap process to perform
 
-- exclude-active is a boolean, enabled by default. When disabled, forces nmap to scan all configured host(s) on every scan. 
+- exclude_active is a boolean, enabled by default. When disabled, forces nmap to scan all configured host(s) on every scan. 
 >> By default, this component optimizes to only scan for devices that could be marked as 'not_home' within the next <home_interval> minutes. This provides only a single scan for a device to continue to be marked as home. If some device connections are irregular, then a device would toggle back and forth. This is likely the best next option for a user to be able to enable if devices are toggling back and forth, but may increase resource consumption, based on configuration settings.
 
 - local_mac_hostname default is 'localhost', which would create a sensor 'device_tracker.localhost'
@@ -70,7 +70,7 @@ New OPTIONAL config fields:
 
 - include_no_mac is a boolean, disabled by default. When enabled, if a MAC address is not returned by nmap, it will be included and monitored. Naming scheme will will use hostname, or ip address if unavailable. MAC address is marked as 'XX:XX:XX:XX:XX:XX' in known_devices.xml
 
-- exclude-mac is a list of MAC address to be ignored when returned by nmap results. MAC address entries must be in all caps.
+- exclude_mac is a list of MAC address to be ignored when returned by nmap results. MAC address entries must be in all caps.
 
 - debug_log_level is integer (1-5) that allows for limited or expanded debug to log, when debug level is active
 ->> Privacy Warning: debug_log_level of 3+ includes MAC addresses

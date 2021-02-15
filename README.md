@@ -25,6 +25,7 @@ device_tracker:
     interval_seconds: 300
     include_no_mac: false
     scan_options: "-F --host-timeout 5s"
+    local_mac_hostname: "localhost"
     debug_log_level: 2
     new_device_defaults:
       track_new_devices: true

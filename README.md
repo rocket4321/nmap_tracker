@@ -91,7 +91,7 @@ from improved with exclude_active (set to false):
 Recommend to delete known_devices.yaml prior to install. (take a backup first, silly!)
 
 To install, see HASS docs for custom_component install.
-Essentially, place these files in custom_component subfolder
+Essentially, place these files in custom_components subfolder
 
 Recommendations for users with issues:
 - set configuration.yaml to have only nmap_device tracker

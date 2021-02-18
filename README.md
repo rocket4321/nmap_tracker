@@ -92,6 +92,7 @@ Recommend to delete known_devices.yaml prior to install. (take a backup first, s
 
 To install, see HASS docs for custom_component install. 
 Essentially, place these files in custom_components subfolder. That HASS config folder structure would then look like:
+```
 configuration.yaml
 group.yaml
 ...
@@ -100,6 +101,7 @@ group.yaml
 > > > __init__.py
 > > > device_tracker.py
 > > > manifest.json 
+```
 
 Recommendations for users with issues:
 - set configuration.yaml to have only nmap_device tracker

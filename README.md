@@ -87,7 +87,7 @@ from improved with exclude_active (set to false):
 ![plot](./images/history_no_down.png)
 
 
-
+# Installation
 Recommend to delete known_devices.yaml prior to install. (take a backup first, silly!)
 
 To install, see HASS docs for custom_component install. 
@@ -103,6 +103,7 @@ groups.yaml
 > > > manifest.json 
 ```
 
+# Troubleshooting
 Recommendations for users with issues:
 - set configuration.yaml to have only nmap_device tracker
 - alter log level, as below
@@ -122,7 +123,7 @@ logger:
     custom_components.nmap_tracker: debug
 ```
 
-STATUS:
+# Status
 
 I believe this update resolves the below issues
 

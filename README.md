@@ -78,6 +78,16 @@ New OPTIONAL config fields:
 - debug_log_level is integer (1-5) that allows for limited or expanded debug to log, when debug level is active
 ->> Privacy Warning: debug_log_level of 3+ includes MAC addresses
 
+
+# Results:
+from current HASS nmap_tracker:
+![plot](./images/history_rare_down.png)
+
+from improved with exclude_active (set to false):
+![plot](./images/history_no_down.png)
+
+
+
 Recommend to delete known_devices.yaml prior to install. (take a backup first, silly!)
 
 To install, see HASS docs for custom_component install.

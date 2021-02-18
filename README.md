@@ -94,7 +94,7 @@ To install, see HASS docs for custom_component install.
 Essentially, place these files in custom_components subfolder. That HASS config folder structure would then look like:
 ```
 configuration.yaml
-group.yaml
+groups.yaml
 ...
 > custom_components
 > > nmap_tracker

@@ -113,8 +113,10 @@ Recommendations for users with issues:
 ```docker exec <container-name>> nmap <options> <hosts>```
 
 If you still have issues, create an Issue here and please:
-- set debug_log_level to 5
-- execute for at lengthy period (30+ min?) and upload log to github issue
+- Post entire configuration.yaml (should only be nmap_tracker)
+- Post results from working nmap command for your network
+- >> NOTE: May require experimention and investigation into nmap command pararmeters - https://nmap.org/book/port-scanning-options.html
+- Activate debug log, set debug_log_level to 5 within nmap_tracker component config, and upload log to github issue
 ```
 logger:
   default: warning

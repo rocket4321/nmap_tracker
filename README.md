@@ -114,7 +114,7 @@ Recommendations for users with issues:
 
 If you still have issues, create an Issue here and please:
 - Post entire configuration.yaml (should only be nmap_tracker)
-- Post results from working nmap command for your network
+- Post functioning nmap command (for your network) and results
 - >> NOTE: May require experimention and investigation into nmap command pararmeters - https://nmap.org/book/port-scanning-options.html
 - Activate debug log, set debug_log_level to 5 within nmap_tracker component config, and upload log to github issue
 ```

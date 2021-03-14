@@ -5,6 +5,8 @@ Looking for user feedback before submission to HA.......
 
 Sample configuration.yaml
 
+Use Cases ![link](./use-cases.rd)
+
 ```
 device_tracker:
 # Minimum Required

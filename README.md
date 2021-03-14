@@ -18,15 +18,27 @@ device_tracker:
      - 192.168.0.0/24
     home_interval: 20
     exclude_active: true
-    timeout: 60
-    interval_seconds: 300
+    timeout: 10    
     include_no_mac: false
     scan_options: "-F --host-timeout 5s"
     local_mac_hostname: "localhost"
     debug_log_level: 2
+    # base options of device_tracker
+    interval_seconds: 10
     new_device_defaults:
       track_new_devices: true
-      
+
+# Transient Device Use-Case
+# Helpful to change parameters for just a few devices, rather than entire subnet
+  - platform: nmap_tracker
+    hosts:
+     - 192.168.0.0/24
+    home_interval: 5 
+    exclusive_mac:
+     - 00:11:22:33:44:55
+     - 00:11:22:33:44:56
+     - 00:11:22:33:44:57
+    
 # Advanced/Experimental
   - platform: nmap_tracker
     hosts:
@@ -34,9 +46,9 @@ device_tracker:
     home_interval: 10
     exclude_active: false
     timeout: 20
-    interval_seconds: 90
+    interval_seconds: 60
     include_no_mac: true
-    scan_options: " --dns-servers 192.168.0.1 --privileged -n --host-timeout 2s "
+    scan_options: "--dns-servers 192.168.0.1 --privileged --host-timeout 5s"
     exclude:
      - 192.168.0.69
     local_mac_hostname: "localhostunique"
@@ -53,27 +65,29 @@ device_tracker:
     home_interval: 10
     timeout: 30
     interval_seconds: 300
-    scan_options: "-sn --privileged --host-timeout 10s"
+    scan_options: "--host-timeout 10s"
     debug_log_level: 5
     
 ```
 
 New OPTIONAL config fields:
 
-- timeout: postive integer in seconds to allow nmap process to perform
+- debug_log_level is integer (1-5) that allows for limited or expanded debug to log, when debug level is active
+->> Privacy Warning: debug_log_level of 3+ includes MAC addresses
 
 - exclude_active is a boolean, enabled by default. When disabled, forces nmap to scan all configured host(s) on every scan. 
 >> By default, this component optimizes to only scan for devices that could be marked as 'not_home' within the next <home_interval> minutes. This provides only a single scan for a device to continue to be marked as home. If some device connections are irregular, then a device would toggle back and forth. This is likely the best next option for a user to be able to enable if devices are toggling back and forth, but may increase resource consumption, based on configuration settings.
 
-- local_mac_hostname default is 'localhost', which would create a sensor 'device_tracker.localhost'
-- local_mac_hostname can also be a mac to match other created sensors.
+- exclude_mac is a list of MAC address to be ignored when returned by nmap results.
+
+- exclusive_mac is a list of MAC address to be exclusively monitored and all others ignored. The hosts defintion must be include a ip range to include each mac.
 
 - include_no_mac is a boolean, disabled by default. When enabled, if a MAC address is not returned by nmap, it will be included and monitored. Naming scheme will will use hostname, or ip address if unavailable. MAC address is marked as 'XX:XX:XX:XX:XX:XX' in known_devices.xml
 
-- exclude_mac is a list of MAC address to be ignored when returned by nmap results. MAC address entries must be in all caps.
+- local_mac_hostname default is 'localhost', which would create a sensor 'device_tracker.localhost'
+- local_mac_hostname can also be a mac to match other created sensors.
 
-- debug_log_level is integer (1-5) that allows for limited or expanded debug to log, when debug level is active
-->> Privacy Warning: debug_log_level of 3+ includes MAC addresses
+- timeout: postive integer in seconds to allow nmap process to perform
 
 
 # Results:
@@ -165,3 +179,4 @@ Qs for HASS team:
 Latest:
 
 - Incorporated changes to python-nmap and released latest RC candidate. Looking for user feedback
+- Added exclusive_mac list config option, to allow for option changes to specific mac(s)

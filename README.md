@@ -78,9 +78,9 @@ New OPTIONAL config fields:
 - exclude_active is a boolean, enabled by default. When disabled, forces nmap to scan all configured host(s) on every scan. 
 >> By default, this component optimizes to only scan for devices that could be marked as 'not_home' within the next <home_interval> minutes. This provides only a single scan for a device to continue to be marked as home. If some device connections are irregular, then a device would toggle back and forth. This is likely the best next option for a user to be able to enable if devices are toggling back and forth, but may increase resource consumption, based on configuration settings.
 
-- exclude_mac is a list of MAC address to be ignored when returned by nmap results.
+- exclude_mac is a list of MAC address to be ignored when returned by nmap results. Default is empty list.
 
-- exclusive_mac is a list of MAC address to be exclusively monitored and all others ignored. The hosts defintion must be include a ip range to include each mac.
+- exclusive_mac is a list of MAC address to be exclusively monitored and all others ignored. The hosts defintion must be include a ip range to include each mac. If empty list (default), no hosts are filtered by this feature.
 
 - include_no_mac is a boolean, disabled by default. When enabled, if a MAC address is not returned by nmap, it will be included and monitored. Naming scheme will will use hostname, or ip address if unavailable. MAC address is marked as 'XX:XX:XX:XX:XX:XX' in known_devices.xml
 

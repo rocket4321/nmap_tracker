@@ -21,7 +21,7 @@
     home_interval: 3
     timeout: 60
     interval_seconds: 120
-    scan_options: "---host-timeout 2s"
+    scan_options: "--host-timeout 2s"
 
     hosts:
      - 192.168.0.0/24

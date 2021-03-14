@@ -18,15 +18,15 @@ device_tracker:
   - platform: nmap_tracker
     hosts:
      - 192.168.0.0/24
-    home_interval: 20
+    home_interval: 3
     exclude_active: true
-    timeout: 10    
+    timeout: 11   
     include_no_mac: false
     scan_options: "-F --host-timeout 5s"
     local_mac_hostname: "localhost"
     debug_log_level: 2
     # base options of device_tracker
-    interval_seconds: 10
+    interval_seconds: 12
     new_device_defaults:
       track_new_devices: true
 

@@ -75,7 +75,7 @@ Highly Recommended field:
 
 - timeout may require adjustment in every network, but should always be less than interval_seconds
 
-- interval_seconds defines how often the network is scanned by nmap in seconds. Default is 10 seconds. 
+- interval_seconds defines how often the network is scanned by nmap in seconds. Default is 12 seconds. 
 >> This value may by okay for a few hosts, but for an entire network, it should be increased to a recommended minimum of 60 or more.
 
 Software design note:

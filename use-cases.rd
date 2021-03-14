@@ -14,6 +14,7 @@
 # These settings reduce latency from a lost device, but will not work for every device since many could oscillate
 # So, transition those devices to another nmap instance, by using exclusive_mac
 
+- Final config (Allows for specific settings for each ip and/or mac):
 ```
     hosts:
      - 192.168.0.0/24

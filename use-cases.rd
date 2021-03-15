@@ -6,7 +6,7 @@
 ```
     hosts:
      - 192.168.0.0/24
-    consider_home: 3
+    consider_home: 180
     timeout: 60
     interval_seconds: 120
     scan_options: "--host-timeout 2s"
@@ -18,7 +18,7 @@
 ```
     hosts:
      - 192.168.0.0/24
-    consider_home: 3
+    consider_home: 180
     timeout: 60
     interval_seconds: 120
     # Ignore the transient devices in this group            
@@ -29,7 +29,7 @@
 
     hosts:
      - 192.168.0.0/24
-    consider_home: 5
+    consider_home: 300
     timeout: 120
     interval_seconds: 180
     # Only monitor the transient devices in this group             

@@ -18,7 +18,8 @@ device_tracker:
   - platform: nmap_tracker
     hosts:
      - 192.168.0.0/24
-    home_interval: 3
+    consider_home: 3
+    # Note 'consider_home' is replacement for 'home_interval', but home_interval value is still used if provided
     exclude_active: true
     timeout: 11   
     include_no_mac: false
@@ -35,7 +36,7 @@ device_tracker:
   - platform: nmap_tracker
     hosts:
      - 192.168.0.0/24
-    home_interval: 5 
+    consider_home: 5 
     exclusive_mac:
      - 00:11:22:33:44:55
      - 00:11:22:33:44:56
@@ -45,7 +46,7 @@ device_tracker:
   - platform: nmap_tracker
     hosts:
      - 192.168.0.0/24
-    home_interval: 10
+    consider_home: 10
     exclude_active: false
     timeout: 20
     interval_seconds: 60
@@ -64,25 +65,24 @@ device_tracker:
      - www.google.com
     include_no_mac: true
     interval_seconds: 90
-    home_interval: 10
+    consider_home: 10
     timeout: 30
-    interval_seconds: 300
     scan_options: "--host-timeout 10s"
     debug_log_level: 5
-    
 ```
-Highly Recommended field:
+
+# Breaking Changes (minimal):
+
+- config option 'consider_home' is future replacement for 'home_interval'
+
+
+Highly Recommended fields:
 
 - timeout may require adjustment in every network, but should always be less than interval_seconds
 
 - interval_seconds defines how often the network is scanned by nmap in seconds. Default is 12 seconds. 
 >> This value may by okay for a few hosts, but for an entire network, it should be increased to a recommended minimum of 60 or more.
 
-Software design note:
-Due to HASS and nmap design, a scan may take longer than 10 seconds, so an error similar to below will often be displayed. To mitigate this issue, hass is instead provided the previous scan's results on an update request. In practical use, this means nmap data in hass is delayed by at least the time period of 'interval_seconds', so this value should be minimized while balancing host and network resources.
-```
-Updating device list from legacy took longer than the scheduled scan interval
-```
 
 
 New OPTIONAL config fields:
@@ -127,6 +127,12 @@ groups.yaml
 > > > __init__.py
 > > > device_tracker.py
 > > > manifest.json 
+```
+
+Component change design note:
+Due to HASS and nmap design, a scan may take longer than 10 seconds, so an error similar to below will often be displayed. To mitigate this issue, hass is instead provided the previous scan's results on an update request. In practical use, this means nmap data in hass is delayed by at least the time period of 'interval_seconds', so this value should be minimized while balancing host and network resources.
+```
+Updating device list from legacy took longer than the scheduled scan interval
 ```
 
 # Troubleshooting

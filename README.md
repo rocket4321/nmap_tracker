@@ -18,8 +18,8 @@ device_tracker:
   - platform: nmap_tracker
     hosts:
      - 192.168.0.0/24
-    consider_home: 3
-    # Note 'consider_home' is replacement for 'home_interval', but home_interval value is still used if provided
+    consider_home: 180
+    # Note 'consider_home' is replacement for 'home_interval', but consider_home value is now in seconds
     exclude_active: true
     timeout: 11   
     include_no_mac: false
@@ -36,7 +36,7 @@ device_tracker:
   - platform: nmap_tracker
     hosts:
      - 192.168.0.0/24
-    consider_home: 5 
+    consider_home: 300 
     exclusive_mac:
      - 00:11:22:33:44:55
      - 00:11:22:33:44:56
@@ -46,7 +46,7 @@ device_tracker:
   - platform: nmap_tracker
     hosts:
      - 192.168.0.0/24
-    consider_home: 10
+    consider_home: 600
     exclude_active: false
     timeout: 20
     interval_seconds: 60
@@ -65,7 +65,7 @@ device_tracker:
      - www.google.com
     include_no_mac: true
     interval_seconds: 90
-    consider_home: 10
+    consider_home: 600
     timeout: 30
     scan_options: "--host-timeout 10s"
     debug_log_level: 5
@@ -73,7 +73,7 @@ device_tracker:
 
 # Breaking Changes (minimal):
 
-- config option 'consider_home' is future replacement for 'home_interval'
+- config option 'consider_home' is replacement for 'home_interval'. Change from minutes to seconds to match device tracker standards.
 
 
 Highly Recommended fields:

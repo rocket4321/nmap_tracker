@@ -6,7 +6,7 @@
 ```
     hosts:
      - 192.168.0.0/24
-    home_interval: 3
+    consider_home: 3
     timeout: 60
     interval_seconds: 120
     scan_options: "--host-timeout 2s"
@@ -18,16 +18,21 @@
 ```
     hosts:
      - 192.168.0.0/24
-    home_interval: 3
+    consider_home: 3
     timeout: 60
     interval_seconds: 120
+    # Ignore the transient devices in this group            
+    exclude_mac:
+     - 11:22:33:44:55:66
+     - aa:bb:cc:dd:ee:ff                
     scan_options: "--host-timeout 2s"
 
     hosts:
      - 192.168.0.0/24
-    home_interval: 5
+    consider_home: 5
     timeout: 120
     interval_seconds: 180
+    # Only monitor the transient devices in this group             
     exclusive_mac:
      - 11:22:33:44:55:66
      - aa:bb:cc:dd:ee:ff

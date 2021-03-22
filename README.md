@@ -1,7 +1,29 @@
 # nmap_tracker
 nmap_tracker component for Home Assistant
 
-Looking for user feedback before submission to HA.......
+Here is the latest feedback from HA Devs:
+-- Looking for help to implement......
+
+We no longer allow integrations to add or change a platform YAML configuration.
+
+More information on this can be found in Architecture Decision Record:
+
+    ADR-0007: https://github.com/home-assistant/architecture/blob/master/adr/0007-integration-config-yaml-structure.md#decision
+
+Please note that this integration connects to a device or service and another Architecture Decision Record applies that disallows the use of YAML configuration in favor of a configuration flow via the UI:
+
+    ADR-0010: https://github.com/home-assistant/architecture/blob/master/adr/0010-integration-configuration.md#decision
+
+See our developer documentation on how to get started creating a configuration flow for this integration:
+
+https://developers.home-assistant.io/docs/config_entries_config_flow_handler
+
+As these changes often involve a bit of work and some significant shift in the current code, we will close this PR for now.
+
+We (and our community!) would really appreciate it if you could start on the refactoring of this integration in a new PR.
+
+Thanks already! 👍
+
 
 Sample configuration.yaml
 
